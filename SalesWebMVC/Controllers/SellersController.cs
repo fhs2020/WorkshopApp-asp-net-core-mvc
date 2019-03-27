@@ -45,27 +45,26 @@ namespace SalesWebMVC.Controllers
         //    return View(seller);
         //}
 
-        //// GET: Sellers/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Sellers/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //// POST: Sellers/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,Email,BirthDate,BaseSalary")] Seller seller)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(seller);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(seller);
-        //}
+        // POST: Sellers/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Seller seller)
+        {
+            if (ModelState.IsValid)
+            {
+                _sellerService.Insert(seller);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(seller);
+        }
 
         //// GET: Sellers/Edit/5
         //public async Task<IActionResult> Edit(int? id)
