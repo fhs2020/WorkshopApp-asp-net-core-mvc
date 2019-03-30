@@ -30,23 +30,22 @@ namespace SalesWebMVC.Controllers
             return View(list);
         }
 
-        // GET: Sellers/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        //GET: Sellers/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var seller = await _context.Seller
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (seller == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var seller = _sellerService.FindById(id.Value);
+            if (seller == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(seller);
-        //}
+            return View(seller);
+        }
 
         // GET: Sellers/Create
         public IActionResult Create()
@@ -69,6 +68,28 @@ namespace SalesWebMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(seller);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+                return NotFound();
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            _sellerService.Remove(id);
+            return RedirectToAction(nameof(Index));
         }
 
         //// GET: Sellers/Edit/5
